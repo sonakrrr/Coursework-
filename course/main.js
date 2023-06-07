@@ -1,14 +1,15 @@
 const game = document.getElementById("game");
 const res = document.getElementById("res");
 const resetBtn = document.getElementById("reset");
-const you = "X",
-    ai = "O";
+const you = "X";
+const ai = "O";
 
 class Game {
     constructor(boardSize = 3) {
         this.boardSize = boardSize;
         this.step = Math.floor(Math.random() * 2);
         this.stepCount = 0;
+        this.gameOver = false;
 
         resetBtn.addEventListener("click", () => {
             this.resetGame();
@@ -38,21 +39,26 @@ class Game {
         game.innerHTML = "";
         this.stepCount = 0;
         this.cellArray = [];
+        this.gameOver = false;
         this.createCellArray();
     }
 
     yourSteps() {
         return (e) => {
-            this.stepCount += 1;
+            if (this.gameOver) return;
             const id = e.target.getAttribute("data-id");
+            if (this.board[+id] !== +id) return;
+            this.stepCount += 1;
             this.board[+id] = you;
             this.cellArray[+id].innerHTML = `<span>${you}</span>`;
             if (this.stepCount >= this.lim) {
                 this.showRes("YOU HAVE A TIE");
+                this.gameOver = true;
                 return;
             }
             if (this.checkWinner(this.board, you)) {
                 this.showRes("GOOD JOB, YOU WON");
+                this.gameOver = true;
                 return;
             }
             this.aiSteps();
@@ -60,16 +66,19 @@ class Game {
     }
 
     aiSteps() {
+        if (this.gameOver) return;
         this.stepCount += 1;
         const bestStep = this.minimax(this.board, ai);
         this.board[bestStep.idx] = ai;
         this.cellArray[bestStep.idx].innerHTML = `<span>${ai}</span>`;
         if (this.stepCount >= this.lim) {
             this.showRes("YOU HAVE A TIE");
+            this.gameOver = true;
             return;
         }
         if (this.checkWinner(this.board, ai)) {
             this.showRes("YOU ARE A FAILURE");
+            this.gameOver = true;
             return;
         }
     }
@@ -154,7 +163,6 @@ class Game {
     showRes(message) {
         res.innerHTML = `<h3>${message}</h3>`;
     }
-
 }
 
 new Game();
