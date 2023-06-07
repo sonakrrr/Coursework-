@@ -1,0 +1,56 @@
+body {
+    padding: 20px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    background-color: beige;
+}
+
+button {
+    display: flex;
+    border: 3px solid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 50px;
+    width: 220px;
+    color: rgb(125, 2, 2);
+    background-color: beige;
+    position: absolute;
+    top: 450px;
+    right: 530px;
+    font-size: 20px;
+}
+
+#res {
+    text-align: center;
+    margin-top: 10px;
+    color: rgb(125, 2, 2);
+    font-size: 26px;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+}
+
+#game {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#game div {
+    color: darkgreen;
+    width: 100px;
+    height: 100px;
+    border: 3px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#game div span {
+    align-self: center;
+    font-size: 100px;
+}
